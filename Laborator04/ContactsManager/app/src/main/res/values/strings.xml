@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">PhoneDialer</string>
+    <string name="app_name">Contacts Manager</string>
     <string name="action_settings">Settings</string>
-    <string name="number">Number</string>
     <string name="phone_error">Error!</string>
 </resources>

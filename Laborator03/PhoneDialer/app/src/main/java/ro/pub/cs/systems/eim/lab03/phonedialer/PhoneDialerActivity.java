@@ -10,12 +10,14 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class PhoneDialerActivity extends AppCompatActivity {
 
@@ -25,6 +27,22 @@ public class PhoneDialerActivity extends AppCompatActivity {
         public void onClick(View v) {
             EditText number = (EditText) findViewById(R.id.number);
             number.setText(number.getText().append(((Button) v).getText()));
+        }
+    }
+
+    class ContactButtonListener implements View.OnClickListener {
+        public void onClick(View v) {
+            EditText phone = (EditText)findViewById(R.id.number);
+            String phoneNumber = phone.getText().toString();
+            Log.d("lala", "phone number is " + phoneNumber);
+
+            if (phoneNumber.length() > 0) {
+                Intent intent = new Intent("ro.pub.cs.systems.eim.lab04.contactsmanager.intent.action.ContactsManagerActivity");
+                intent.putExtra("ro.pub.cs.systems.eim.lab04.contactsmanager.PHONE_NUMBER_KEY", phoneNumber);
+                startActivityForResult(intent, Constants.CONTACTS_MANAGER_REQUEST_CODE);
+            } else {
+                Toast.makeText(getApplication(), getResources().getString(R.string.phone_error), Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -94,6 +112,9 @@ public class PhoneDialerActivity extends AppCompatActivity {
 
         ImageButton img3 = (ImageButton) findViewById(R.id.imageButton3);
         img3.setOnClickListener(new CloseNumberListener());
+
+        ImageButton img4 = (ImageButton) findViewById(R.id.imageButton4);
+        img4.setOnClickListener(new ContactButtonListener());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
